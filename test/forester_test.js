@@ -1026,7 +1026,7 @@ function testNewHampshire3() {
         return false;
     }
 
-    var nh3 = "([&comment(,:](a:1[&comment(,:]1,b:22[&comment(,:]):4[&comment(,:]4,c[&comment(,:]:3[&comment(,:]3);";
+    var nh3 = "([ & comment(,:](a:1[&comment(,:]1,b:22 [    &comment(,: ] ):4[&comment(,:]4,c[&comment(,:]:3[&comment(,:]3);";
     var nh3r = "((a:11,b:22):44,c:33);";
     var phy3 = forester.parseNewHampshire(nh3);
     if (forester.toNewHampshire(phy3) !== nh3r) {
