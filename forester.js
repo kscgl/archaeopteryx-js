@@ -20,8 +20,8 @@
  *
  */
 
-// v 2.2.0.a1
-// 2025-06-03
+// v 2.3.0.a1
+// 2025-06-30
 //
 // forester.js is a general suite for dealing with phylogenetic trees.
 // 
@@ -1214,7 +1214,10 @@
 
         let ancs = [];
         let x = {};
-        let ss = nhStr.split(/(;|\(|\)|,|:|"|')/);
+
+        let sss = nhStr.replace(/\[&.+?\]/g, '');
+
+        let ss = sss.split(/(;|\(|\)|,|:|"|')/);
         let ssl = ss.length;
         let in_double_q = false;
         let in_single_q = false;
@@ -1335,6 +1338,7 @@
                                 }
                             }
                         }
+
                     }
                 }
             }
