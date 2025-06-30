@@ -1,6 +1,6 @@
 /**
- *  Copyright (C) 2016 Christian M. Zmasek
- *  Copyright (C) 2016 J. Craig Venter Institute
+ *  Copyright (C) 2025 Christian M. Zmasek
+ *  Copyright (C) 2025 J. Craig Venter Institute
  *  All rights reserved
  *
  *  This library is free software; you can redistribute it and/or
@@ -19,8 +19,8 @@
  *
  */
 
-// v 1_07
-// 2018-06-04
+// v 2.3.0.a1
+// 2025-06-30
 
 "use strict";
 
@@ -37,17 +37,17 @@ var t0 = pth.join(__dirname, "./data/t0.xml");
 var t1 = pth.join(__dirname, "./data/t1.xml");
 var t_properties = pth.join(__dirname, "./data/properties.xml");
 
-console.log("getTreeRoot                : " + ( testGetTreeRoot() === true ? "pass" : "FAIL" ));
-console.log("preOrderTraversal          : " + ( testPreOrderTraversal() === true ? "pass" : "FAIL" ));
-console.log("preOrderTraversalAll       : " + ( testPreOrderTraversalAll() === true ? "pass" : "FAIL" ));
-console.log("NewHampshire               : " + ( testNewHampshire() === true ? "pass" : "FAIL" ));
-console.log("NewHampshire               : " + ( testNewHampshire2() === true ? "pass" : "FAIL" ));
-console.log("reRoot 1                   : " + ( testReRoot1() === true ? "pass" : "FAIL" ));
-console.log("reRoot 2                   : " + ( testReRoot2() === true ? "pass" : "FAIL" ));
-console.log("reRoot 3                   : " + ( testReRoot3() === true ? "pass" : "FAIL" ));
-console.log("collectProperties          : " + ( testCollectProperties() === true ? "pass" : "FAIL" ));
-console.log("delete subtree             : " + ( testDeleteSubtree() === true ? "pass" : "FAIL" ));
-
+console.log("getTreeRoot                : " + (testGetTreeRoot() === true ? "pass" : "FAIL"));
+console.log("preOrderTraversal          : " + (testPreOrderTraversal() === true ? "pass" : "FAIL"));
+console.log("preOrderTraversalAll       : " + (testPreOrderTraversalAll() === true ? "pass" : "FAIL"));
+console.log("NewHampshire 1             : " + (testNewHampshire() === true ? "pass" : "FAIL"));
+console.log("NewHampshire 2             : " + (testNewHampshire2() === true ? "pass" : "FAIL"));
+console.log("NewHampshire 3             : " + (testNewHampshire3() === true ? "pass" : "FAIL"));
+console.log("reRoot 1                   : " + (testReRoot1() === true ? "pass" : "FAIL"));
+console.log("reRoot 2                   : " + (testReRoot2() === true ? "pass" : "FAIL"));
+console.log("reRoot 3                   : " + (testReRoot3() === true ? "pass" : "FAIL"));
+console.log("collectProperties          : " + (testCollectProperties() === true ? "pass" : "FAIL"));
+console.log("delete subtree             : " + (testDeleteSubtree() === true ? "pass" : "FAIL"));
 
 function readPhyloXmlFromFile(fileName) {
     var fs = require('fs');
@@ -841,7 +841,6 @@ function testNewHampshire2() {
     var nh0r = "(b);";
     var phy0 = forester.parseNewHampshire(nh0);
     if (forester.toNewHampshire(phy0) !== nh0r) {
-        console.log("1");
         console.log(forester.toNewHampshire(phy0));
         return false;
     }
@@ -850,7 +849,6 @@ function testNewHampshire2() {
     var nh00r = "(b_x);";
     var phy00 = forester.parseNewHampshire(nh00);
     if (forester.toNewHampshire(phy00, 4, true, true) !== nh00r) {
-
         console.log(forester.toNewHampshire(phy00, 4, true, true));
         return false;
     }
@@ -999,6 +997,43 @@ function testNewHampshire2() {
     if (phy501nh !== phy501nhnh) {
         return false;
     }
+    return true;
+}
+
+function testNewHampshire3() {
+
+    var nh0 = "(a,b[&comment]);";
+    var nh0r = "(a,b);";
+    var phy0 = forester.parseNewHampshire(nh0);
+    if (forester.toNewHampshire(phy0) !== nh0r) {
+        console.log(forester.toNewHampshire(phy0));
+        return false;
+    }
+
+    var nh1 = "((a:1,b:2[&comment]):4,c:3);";
+    var nh1r = "((a:1,b:2):4,c:3);";
+    var phy1 = forester.parseNewHampshire(nh1);
+    if (forester.toNewHampshire(phy1) !== nh1r) {
+        console.log(forester.toNewHampshire(phy1));
+        return false;
+    }
+
+    var nh2 = "((a:1,b:2[&comment(,:]):4,c:3);";
+    var nh2r = "((a:1,b:2):4,c:3);";
+    var phy2 = forester.parseNewHampshire(nh2);
+    if (forester.toNewHampshire(phy2) !== nh2r) {
+        console.log(forester.toNewHampshire(phy2));
+        return false;
+    }
+
+    var nh3 = "([&comment(,:](a:1[&comment(,:]1,b:22[&comment(,:]):4[&comment(,:]4,c[&comment(,:]:3[&comment(,:]3);";
+    var nh3r = "((a:11,b:22):44,c:33);";
+    var phy3 = forester.parseNewHampshire(nh3);
+    if (forester.toNewHampshire(phy3) !== nh3r) {
+        console.log(forester.toNewHampshire(phy3));
+        return false;
+    }
+
     return true;
 }
 
