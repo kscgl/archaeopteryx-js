@@ -1215,7 +1215,7 @@
         let ancs = [];
         let x = {};
 
-        let sss = nhStr.replace(/\[&.+?\]/g, '');
+        let sss = nhStr.replace(/\[\s*&.+?\]/g, '');
 
         let ss = sss.split(/(;|\(|\)|,|:|"|')/);
         let ssl = ss.length;
